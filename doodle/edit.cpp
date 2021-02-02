@@ -1,7 +1,7 @@
 #include "edit.h"
 void editor::Initialize() 
 {
-   
+    std::cout << "File initalize" << std::endl;
            double posy = 0;
            for (int j = 0; j < height_number; j++)
            {
@@ -22,6 +22,7 @@ void editor::Initialize()
 
 void editor::load()
 { 
+    std::cout << "File load" << std::endl;
     std::ifstream ifs{"result1.txt"};
     bool           temp;
     while (ifs>>temp)

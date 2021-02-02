@@ -12,7 +12,7 @@ using namespace doodle;
 class sketch
 {
 public:
-    int      loop_counter = 0;
+    
     editor editor;
     mainmenu mainmenu;
     game     game;

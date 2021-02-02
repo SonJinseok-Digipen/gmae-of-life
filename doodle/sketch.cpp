@@ -2,6 +2,7 @@
 #include"edit.h"
 void sketch::setup()
 {
+    
     create_window(1000,1000);
     set_frame_of_reference(FrameOfReference::LeftHanded_OriginTopLeft);
     set_rectangle_mode(RectMode::Corner);
@@ -9,13 +10,25 @@ void sketch::setup()
     {
         std::cout << "file not exist" << std::endl;
         editor.Initialize();
+       
     }
     if (std::filesystem::exists("result1.txt"))
     {
-        std::cout << "file exist" << std::endl;
-        editor.load();
-    }
+        if (std::filesystem::is_empty("result1.txt"))
+        {
+            std::cout << "file not exist" << std::endl;
+            editor.Initialize();
+        }
 
+        if (!std::filesystem::is_empty("result1.txt"))
+        {
+            std::cout << "file exist" << std::endl;
+            editor.load();
+        }
+        
+
+    }
+    std::cout << "If you close console window you can not save ur data" << std::endl;
     
 }
 
@@ -23,6 +36,7 @@ void sketch::update()
 {
     GameMode      CurrentMode = GameMode::mainmenu;
     std::ofstream ofs{"result1.txt"};
+   
     while (!is_window_closed())
     {
         update_window();
@@ -37,6 +51,7 @@ void sketch::update()
             case GameMode::mainmenu: 
             mainmenu.update(CurrentMode);
             mainmenu.draw();
+            
             break;
 
             case GameMode::howtoplay:
@@ -49,14 +64,13 @@ void sketch::update()
             game.draw(editor);
             save_data(game, editor);
             break;
-
-
-
-
+                     
         }
-              
+            
         
     }
     save_data(ofs, editor);
+    ofs.close();
+    
     
 }
